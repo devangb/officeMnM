@@ -5,10 +5,14 @@ namespace AppBundle\Entity;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @UniqueEntity(fields={"email"}, message="You are with us already!")
  */
 class User implements UserInterface {
 	
@@ -20,6 +24,8 @@ class User implements UserInterface {
 	private $id;
 	
 	/**
+	 * @Assert\NotBlank()
+	 * @Assert\Email()
 	 * @ORM\Column(type="string", unique=true)
 	 */
 	private $email;
@@ -32,6 +38,8 @@ class User implements UserInterface {
 	
 	/**
 	 * Non-persisted feild for creating encoded password
+	 * @Assert\NotBlank(groups={"Registration"})
+	 * 
 	 * @var string
 	 */
 	private $plainPassword;
@@ -75,6 +83,14 @@ class User implements UserInterface {
 		$this->plainPassword = $plainPassword;
 		//Not to save password if only plainpassword changes
 		$this->password = null;
+	}
+	
+	public function getEmail() {
+		return $this->email;
+	}
+	
+	public function setEmail($email) {
+		$this->email = $email;
 	}
 	
 }
