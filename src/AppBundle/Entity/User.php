@@ -24,6 +24,18 @@ class User implements UserInterface {
 	 */
 	private $email;
 	
+	/**
+	 * Encoded password
+	 * @ORM\Column(type="string")
+	 */
+	private $password;
+	
+	/**
+	 * Non-persisted feild for creating encoded password
+	 * @var string
+	 */
+	private $plainPassword;
+	
 	
 	private $username;
 	
@@ -36,7 +48,7 @@ class User implements UserInterface {
 	}
 	
 	public function getPassword() {
-		
+		return $this->password;
 	}
 	
 	public function getSalt() {
@@ -44,10 +56,25 @@ class User implements UserInterface {
 	}
 	
 	public function eraseCredentials() {
-		
+		$this->plainPassword = null;
 	}
 	
 	public function setUsername($username) {
 		$this->username = $username;
 	}
+	
+	public function setPassword($password) {
+		$this->password = $password;
+	}
+	
+	public function getPlainPassword() {
+		return $this->plainPassword;
+	}
+	
+	public function setPlainPassword($plainPassword) {
+		$this->plainPassword = $plainPassword;
+		//Not to save password if only plainpassword changes
+		$this->password = null;
+	}
+	
 }
