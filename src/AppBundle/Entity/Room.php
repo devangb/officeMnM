@@ -42,6 +42,13 @@ class Room {
 	 */
 	private $capacity;
 	
+	/**
+	 * @ORM\ManyToOne(targetEntity="Building")
+	 * @ORM\JoinColumn(nullable=false)
+	 * 
+	 * @var building
+	 */
+	private $building;
 	
 	public function getRoomName() {
 		return $this->room_name;
@@ -64,5 +71,20 @@ class Room {
 		$this->capacity = $capacity;
 		return $this;
 	}
+	public function getId() {
+		return $this->id;
+	}
+	public function setId($id) {
+		$this->id = $id;
+		return $this;
+	}
+	public function getBuilding() {
+		return $this->building;
+	}
+	public function setBuilding(Building $building) {
+		$this->building = $building;
+		return $this;
+	}
+	
 	
 }

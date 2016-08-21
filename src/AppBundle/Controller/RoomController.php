@@ -35,9 +35,17 @@ class RoomController extends Controller {
 		$room = $em->getRepository('AppBundle:Room')
 				->findOneBy(['name' => $roomName]);
 		
+		if(!$room) {
+			throw $this->createNotFoundException('Room has gone missing!');
+		}
+		
+		//To-Do Caching and logging
+		
 		return $this->render('room/show.html.twig', array(
 				'room' => $room
 		));
+		
+		
 	}
 	
 	/**
