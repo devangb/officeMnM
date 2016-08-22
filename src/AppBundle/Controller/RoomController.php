@@ -6,23 +6,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Room;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Form\RoomAddForm;
+use Symfony\Component\HttpFoundation\Request;
 
 class RoomController extends Controller {
 	
 	/**
 	 * @Route("/room/add", name="room_add")
 	 */
-	public function addAction() {
-		$room = new Room();
-		$room->setRoomName('Room'.rand(1,100));
-		$room->setRoomFloor(rand(0,4));
-		$room->setCapacity(rand(5,40));
+	public function addAction(Request $request) {
+		$form = $this->createForm(RoomAddForm::class);
 		
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($room);
-		$em->flush();
+		$form->handleRequest($request); 
+		if($form->isSubmitted() && $form->isValid()){
+			$room = $form->getData();
+			
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($room);
+			$em->flush();
 		
-		return new Response('<html><body>Room Created</body></html>');
+			return $this->redirectToRoute('room_list');
+		}
+		
+		return $this->render('room/add.html.twig',[
+				'roomForm' => $form->createView()
+		]);
 	}
 	
 	/**
@@ -33,7 +41,7 @@ class RoomController extends Controller {
 		$em = $this->getDoctrine()->getManager();
 		
 		$room = $em->getRepository('AppBundle:Room')
-				->findOneBy(['name' => $roomName]);
+				->findOneBy(['room_name' => $roomName]);
 		
 		if(!$room) {
 			throw $this->createNotFoundException('Room has gone missing!');

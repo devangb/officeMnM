@@ -28,7 +28,7 @@ class Building {
 	private $building_name;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="Organisation")
+	 * @ORM\ManyToOne(targetEntity="Organisation", inversedBy="buildings")
 	 * @ORM\JoinColumn(nullable=false)
 	 * 
 	 * @var Organisation
@@ -44,6 +44,10 @@ class Building {
 	
 	public function __construct() {
 		$this->rooms = new ArrayCollection();
+	}
+	
+	public function __toString() {
+		return $this->getBuildingName();
 	}
 	
 	public function getId() {

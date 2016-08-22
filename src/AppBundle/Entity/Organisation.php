@@ -18,32 +18,39 @@ class Organisation {
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 * @ORM\Column(type="integer")
+	 * 
+	 * @var 
 	 */
 	private $id;
 	
 	/**
 	 * @ORM\Column(type="string")
 	 * 
-	 * @var organisation_name
+	 * @var string
 	 */
 	private $organisation_name;
 	
 	/**
 	 * @ORM\Column(type="string")
 	 * 
-	 * @var organisation_domain
+	 * @var string
 	 */
 	private $organisation_domain;
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="Building", mappedBy="organisation")
 	 * 
-	 * @var buildings
+	 * @var Building
 	 */
 	private $buildings;
 	
+	
 	public function __construct() {
 		$this->buildings = new ArrayCollection();
+	}
+	
+	public function __toString() {
+		return $this->organisation_name;
 	}
 	
 	public function getOrganisationName() {
@@ -59,19 +66,39 @@ class Organisation {
 		return $this->organisation_domain;
 	}
 	
+	/**
+	 * 
+	 * @param string $organisation_domain
+	 * @return \AppBundle\Entity\Organisation
+	 */
 	public function setOrganisationDomain($organisation_domain) {
 		$this->organisation_domain = $organisation_domain;
 		return $this;
 	}
+	
+	/**
+	 * Get Id
+	 * 
+	 * @return int
+	 */
 	public function getId() {
 		return $this->id;
 	}
+	
+	/**
+	 * Set Id
+	 * 
+	 * @param int $id
+	 * @return \AppBundle\Entity\Organisation
+	 */
 	public function setId($id) {
 		$this->id = $id;
 		return $this;
 	}
 	
 	/**
+	 * Get Buildings
+	 * 
 	 * @return ArrayCollection|Building[]
 	 */
 	public function getBuildings() {

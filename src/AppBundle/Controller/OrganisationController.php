@@ -10,6 +10,8 @@ use AppBundle\Entity\Building;
 use AppBundle\Entity\Room;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Form\OrganisationAddForm;
+use Symfony\Component\HttpFoundation\Request;
 
 class OrganisationController extends Controller {
 	
@@ -17,44 +19,72 @@ class OrganisationController extends Controller {
 	 * @Route("/organisation/add", name="organisation_add")
 	 * 
 	 */
-	public function addAction() {
-		$organisation = new Organisation();
-		$organisation->setOrganisationName('Practo');
-		$organisation->setOrganisationDomain('practo.com');
+	public function addAction(Request $request) {
+// 		$organisation = new Organisation();
+// 		$organisation->setOrganisationName('Facebook');
+// 		$organisation->setOrganisationDomain('google.com');
 		
-		$building1 = new Building();
-		$building1->setBuildingName('Mars');
-		$building1->setOrganisation($organisation);
+// 		$building1 = new Building();
+// 		$building1->setBuildingName('Jupiter');
+// 		$building1->setOrganisation($organisation);
 		
-		$room1 = new Room();
-		$room1->setBuilding($building1);
-		$room1->setRoomName('Moria');
-		$room1->setRoomFloor(3);
-		$room1->setCapacity(25);
+// 		$room2 = new Room();
+// 		$room2->setBuilding($building1);
+// 		$room2->setRoomName('Rohan');
+// 		$room2->setRoomFloor(2);
+// 		$room2->setCapacity(23);
 		
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($organisation);
-		$em->persist($building1);
-		$em->persist($room1);
-		$em->flush();
+// 		$room1 = new Room();
+// 		$room1->setBuilding($building1);
+// 		$room1->setRoomName('Moria');
+// 		$room1->setRoomFloor(3);
+// 		$room1->setCapacity(25);
 		
-		return new Response('<html><body>Organisation, building and room created!</body></html>');
+// 		$em = $this->getDoctrine()->getManager();
+// 		$em->persist($organisation);
+// 		$em->persist($building1);
+// 		$em->persist($room1);
+// 		$em->persist($room2);
+// 		$em->flush();
+
+		$form = $this->createForm(OrganisationAddForm::class);
+		
+		$form->handleRequest($request);
+		if($form->isSubmitted() && $form->isValid()) {
+			$organisation = $form->getData();
+				
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($organisation);
+			$em->flush();
+			
+			return $this->redirectToRoute('organisation_list');
+		}
+		
+		return $this->render('organisation/add.html.twig', [
+			'organisationForm' => $form->createView()	
+		]);
+		
 	}
 	
 	/**
-	 * @Route("/organisation/{name}/buildings", name="organisation_show_buildings")
+	 * @Route("/organisation/{organisation_name}/buildings", name="organisation_show_buildings")
 	 * @Method("GET")
 	 * 
 	 * @param Organisation $organisation
 	 */
-	public function getBuildingsAction(Organisation $organisation) {
+	public function getBuildingsAction($organisation_name) {
+		$em = $this->getDoctrine()->getManager();
+		
+		$organisation = $em->getRepository('AppBundle:Organisation')
+		->findOneBy(['organisation_name' => $organisation_name]);
+		
 		$buildings = [];
 		
 		foreach ($organisation->getBuildings() as $building) {
-			$buildings = [
+			array_push($buildings, [
 					'id' => $building->getId(),
 					'buildingName' => $building->getBuildingName(),
-			];
+			]);
 		}
 		
 		$data = [
@@ -65,21 +95,26 @@ class OrganisationController extends Controller {
 	}
 	
 	/**
-	 * @Route("/organisation/{name}/rooms", name="organisation_show_rooms")
+	 * @Route("/organisation/{organisation_name}/rooms", name="organisation_show_rooms")
 	 * 
-	 * @param Organisation $organisation
+	 * @param string $organisation_name
 	 */
-	public function getRoomsActions(Organisation $organisation) {
+	public function getRoomsActions($organisation_name) {
+		$em = $this->getDoctrine()->getManager();
+		
+		$organisation = $em->getRepository('AppBundle:Organisation')
+				->findOneBy(['organisation_name' => $organisation_name]);
+		
 		$rooms = [];
 		
 		foreach ($organisation->getBuildings() as $building) {
 			foreach ($building->getRooms() as $room) {
-				$rooms = [
+				array_push($rooms, [
 						'id' => $room->getId(),
 						'roomName' => $room->getRoomName(),
 						'roomFloor' => $room->getRoomFloor(),
 						'capacity' => $room->getCapacity()
-				];
+				]);
 			}
 		}
 		

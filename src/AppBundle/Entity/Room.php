@@ -43,7 +43,7 @@ class Room {
 	private $capacity;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="Building")
+	 * @ORM\ManyToOne(targetEntity="Building", inversedBy="rooms")
 	 * @ORM\JoinColumn(nullable=false)
 	 * 
 	 * @var building

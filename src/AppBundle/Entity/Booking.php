@@ -3,7 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="booking")
+ */
 class Booking {
 	
 	/**
@@ -18,22 +23,35 @@ class Booking {
 	/**
 	 * @ORM\ManyToOne(targetEntity="Room")
 	 * 
-	 * @var unknown
+	 * @var Room
 	 */
 	private $room;
 	
 	/**
+	 * @ORM\ManyToMany(targetEntity="User")
 	 * 
-	 * @var unknown
+	 * @var User
 	 */
 	private $organiser;
 	
 	/**
 	 * @ORM\Column(type="datetime")
 	 * 
-	 * @var unknown
+	 * @var \DateTime
 	 */
 	private $start_time;
+	
+	/**
+	 * @ORM\Column(type="datetime")
+	 * 
+	 * @var \DateTime
+	 */
 	private $end_time;
+	
+	/**
+	 * @ORM\Column(type="datetime")
+	 * 
+	 * @var \DateTime
+	 */
 	private $extended_time;
 }
