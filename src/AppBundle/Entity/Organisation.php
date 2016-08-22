@@ -44,9 +44,17 @@ class Organisation {
 	 */
 	private $buildings;
 	
+	/**
+	 * @ORM\OneToMany(targetEntity="User", mappedBy="user_organisation")
+	 * 
+	 * @var Users
+	 */
+	private $organisation_users;
+	
 	
 	public function __construct() {
 		$this->buildings = new ArrayCollection();
+		$this->organisation_users = new ArrayCollection();
 	}
 	
 	public function __toString() {
@@ -104,6 +112,10 @@ class Organisation {
 	public function getBuildings() {
 		return $this->buildings;
 	}
+	public function getOrganisationUsers() {
+		return $this->organisation_users;
+	}
+	
 	
 	
 }

@@ -9,12 +9,16 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use AppBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserRegistrationForm extends AbstractType {
 	
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder
 			->add('email', EmailType::class)
+			->add('name', TextType::class)
+			->add('user_organisation')
+			->add('primary_building')
 			->add('plainPassword', RepeatedType::class, [
 					'type' => PasswordType::class
 			]);

@@ -10,7 +10,9 @@ use AppBundle\Form\BuildingAddForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BuildingController extends Controller {
-	
+	/**
+	 * @Route("/building/add", name="building_add")
+	 */
 	public function addAction(Request $request) {
 		$form = $this->createForm(BuildingAddForm::class);
 		

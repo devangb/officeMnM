@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * 
@@ -50,6 +51,16 @@ class Room {
 	 */
 	private $building;
 	
+	/**
+	 * @ORM\OneToMany(targetEntity="Booking", mappedBy="room")
+	 * @var unknown
+	 */
+	private $bookings;
+	
+	public function __construct() {
+		$this->bookings =  new ArrayCollection();
+	}
+	
 	public function getRoomName() {
 		return $this->room_name;
 	}
@@ -85,6 +96,15 @@ class Room {
 		$this->building = $building;
 		return $this;
 	}
+	
+	/**
+	 * 
+	 * @return ArrayCollection|Booking[]
+	 */
+	public function getBookings() {
+		return $this->bookings;
+	}
+	
 	
 	
 }

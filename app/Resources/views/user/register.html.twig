@@ -6,6 +6,7 @@
             <div class="col-xs-12">
                 <h1>Register!</h1>
                 {{ form_start(form) }}
+                	{{ form_row(form.name) }}
                     {{ form_row(form.email) }}
                     {{ form_row(form.plainPassword.first, {
                         'label': 'Password'
@@ -13,8 +14,12 @@
                     {{ form_row(form.plainPassword.second, {
                         'label': 'Repeat Password'
                     }) }}
+                    {{ form_row(form.user_organisation) }}
+                    {{ form_row(form.primary_building) }}
                     <button type="submit" class="btn btn-primary" formnovalidate>Register</button>
                 {{ form_end(form) }}
+                &nbsp;
+            	<a href="{{ path('security_login') }}">I have an account!</a>
             </div>
         </div>
     </div>

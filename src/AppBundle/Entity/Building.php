@@ -42,8 +42,16 @@ class Building {
 	 */
 	private $rooms;
 	
+	/**
+	 * @ORM\OneToMany(targetEntity="User", mappedBy="primary_building")
+	 * 
+	 * @var unknown
+	 */
+	private $building_users;
+	
 	public function __construct() {
 		$this->rooms = new ArrayCollection();
+		$this->building_users = new ArrayCollection();
 	}
 	
 	public function __toString() {
@@ -78,5 +86,14 @@ class Building {
 	public function getRooms() {
 		return $this->rooms;
 	}
+	
+	/**
+	 * 
+	 * @return ArrayCollection|Building[]
+	 */
+	public function getBuildingUsers() {
+		return $this->building_users;
+	}
+	
 	
 }

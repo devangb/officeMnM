@@ -1,7 +1,24 @@
-{%  extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-{% for room in rooms %}
-{{ dump(room) }}
-{% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Room</th>
+                <th>Capacity</th>
+                <th>Building</th>
+                <th>Floor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+                <tr>
+                    <td><a href="{{ path('room_show', {'roomId': room.id}) }}">{{ room.roomName }}</a></td>
+                    <td>{{ room.capacity }}</td>
+                    <td>{{ room.building }}</td>
+                    <td>{{ room.roomFloor }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

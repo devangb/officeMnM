@@ -47,6 +47,30 @@ class User implements UserInterface {
 	
 	private $username;
 	
+	/**
+	 * Organisation object
+	 * @ORM\ManyToOne(targetEntity="Organisation", inversedBy="organisation_users")
+	 * @ORM\JoinColumn(nullable=false)
+	 * @var Organisation
+	 */
+	private $user_organisation;
+	
+	/**
+	 * Primary building for user
+	 * @ORM\ManyToOne(targetEntity="Building", inversedBy="building_users")
+	 * @ORM\JoinColumn(nullable=false)
+	 * @var Building
+	 */
+	private $primary_building;
+	
+	/**
+	 * @ORM\Column(type="string")
+	 * @Assert\NotBlank
+	 * 
+	 * @var string
+	 */
+	private $name;
+	
 	public function getUsername() {
 		return $this->username;
 	}
@@ -92,5 +116,35 @@ class User implements UserInterface {
 	public function setEmail($email) {
 		$this->email = $email;
 	}
+	public function getId() {
+		return $this->id;
+	}
+	public function setId($id) {
+		$this->id = $id;
+		return $this;
+	}
+	public function getUserOrganisation() {
+		return $this->user_organisation;
+	}
+	public function setUserOrganisation(Organisation $user_organisation) {
+		$this->user_organisation = $user_organisation;
+		return $this;
+	}
+	public function getPrimaryBuilding() {
+		return $this->primary_building;
+	}
+	public function setPrimaryBuilding(Building $primary_building) {
+		$this->primary_building = $primary_building;
+		return $this;
+	}
+	public function getName() {
+		return $this->name;
+	}
+	public function setName($name) {
+		$this->name = $name;
+		return $this;
+	}
+	
+	
 	
 }

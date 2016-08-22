@@ -11,11 +11,16 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+    	{% block searchbar %}
         <div class="search-bar">
             <form method="GET" action="" class="js-sea-search sea-search">
                 <input type="search" name="q" placeholder="Search for a room" autocomplete="off" class="search-input">
             </form>
         </div>
+        {% endblock %}
+        
+        {% if(1) %}
+        {% block header %}
         <header class="header">
             <img class="logo-icon" src="{{ asset('images/officemnm-logo.png') }}">
             <h1 class="logo">OfficeMnM</h1>
@@ -29,19 +34,27 @@
 
             </ul>
         </header>
+        {% endblock %}
+        {% endif %}
+        
         <div class="main-content">
+        	{% block flashmsg %}
             {% for msg in app.session.flashBag.get('success') %}
                 <div class="alert alert-success">
                     {{ msg }}
                 </div>
             {% endfor %}
+            {% endblock %}
+            
             {% block body %}{% endblock %}
         </div>
         
+        {% if(0) %}
         {%  block footer %}
         <div class="footer">
         </div>
         {% endblock %}
+        {% endif %}
         
         {% block javascripts %}
             <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>

@@ -113,7 +113,7 @@ class OrganisationController extends Controller {
 						'id' => $room->getId(),
 						'roomName' => $room->getRoomName(),
 						'roomFloor' => $room->getRoomFloor(),
-						'capacity' => $room->getCapacity()
+						'capacity' => $room->getCapacity(),
 				]);
 			}
 		}

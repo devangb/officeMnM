@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\RoomAddForm;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RoomController extends Controller {
 	
@@ -34,14 +36,14 @@ class RoomController extends Controller {
 	}
 	
 	/**
-	 * @Route("/room/{roomName}", name="room_show")
+	 * @Route("/room/{roomId}", name="room_show")
 	 */
-	public function showAction($roomName) {
+	public function showAction($roomId) {
 		
 		$em = $this->getDoctrine()->getManager();
 		
 		$room = $em->getRepository('AppBundle:Room')
-				->findOneBy(['room_name' => $roomName]);
+				->findOneBy(['id' => $roomId]);
 		
 		if(!$room) {
 			throw $this->createNotFoundException('Room has gone missing!');
@@ -72,5 +74,30 @@ class RoomController extends Controller {
 	
 	public function searchAction() {
 		
+	}
+	
+	/**
+	 * @Route("/room/{roomId}/bookings", name="room_show_bookings")
+	 * @Method("GET")
+	 */
+	public function getBookingsAction(Room $room) {
+		
+		$bookings = [];
+		
+		foreach ($room->getBookings() as $booking) {
+			array_push($bookings, [
+					'id' => $booking->getId(),
+					'organiser' => $booking->getOrganiser(),
+					'room' => $booking->getRoom(),
+					'startTime' => $booking->getStartTime(),
+					'endTime' => $booking->getEndTime(),
+					'extendedTime' => $booking->getExtendedTime(),
+			]);
+		}
+		$data = [
+			'bookings' => $bookings
+		];
+		
+		return new JsonResponse($data);
 	}
 }
