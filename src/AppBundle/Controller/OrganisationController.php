@@ -20,32 +20,6 @@ class OrganisationController extends Controller {
 	 * 
 	 */
 	public function addAction(Request $request) {
-// 		$organisation = new Organisation();
-// 		$organisation->setOrganisationName('Facebook');
-// 		$organisation->setOrganisationDomain('google.com');
-		
-// 		$building1 = new Building();
-// 		$building1->setBuildingName('Jupiter');
-// 		$building1->setOrganisation($organisation);
-		
-// 		$room2 = new Room();
-// 		$room2->setBuilding($building1);
-// 		$room2->setRoomName('Rohan');
-// 		$room2->setRoomFloor(2);
-// 		$room2->setCapacity(23);
-		
-// 		$room1 = new Room();
-// 		$room1->setBuilding($building1);
-// 		$room1->setRoomName('Moria');
-// 		$room1->setRoomFloor(3);
-// 		$room1->setCapacity(25);
-		
-// 		$em = $this->getDoctrine()->getManager();
-// 		$em->persist($organisation);
-// 		$em->persist($building1);
-// 		$em->persist($room1);
-// 		$em->persist($room2);
-// 		$em->flush();
 
 		$form = $this->createForm(OrganisationAddForm::class);
 		

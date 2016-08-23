@@ -21,14 +21,14 @@ class Booking {
 	private $id;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="Room", inversedBy="bookings")
+	 * @ORM\ManyToOne(targetEntity="Room", inversedBy="room_bookings")
 	 * 
 	 * @var Room
 	 */
 	private $room;
 	
 	/**
-	 * @ORM\ManyToMany(targetEntity="User")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="user_bookings")
 	 * 
 	 * @var User
 	 */

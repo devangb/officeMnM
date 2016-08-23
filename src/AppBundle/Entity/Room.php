@@ -55,10 +55,14 @@ class Room {
 	 * @ORM\OneToMany(targetEntity="Booking", mappedBy="room")
 	 * @var unknown
 	 */
-	private $bookings;
+	private $room_bookings;
 	
 	public function __construct() {
-		$this->bookings =  new ArrayCollection();
+		$this->room_bookings =  new ArrayCollection();
+	}
+	
+	public function __toString() {
+		return $this->getRoomName();
 	}
 	
 	public function getRoomName() {
@@ -101,8 +105,8 @@ class Room {
 	 * 
 	 * @return ArrayCollection|Booking[]
 	 */
-	public function getBookings() {
-		return $this->bookings;
+	public function getRoomBookings() {
+		return $this->room_bookings;
 	}
 	
 	

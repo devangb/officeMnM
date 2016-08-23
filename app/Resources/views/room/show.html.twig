@@ -26,10 +26,10 @@
     {% if(1) %}
     <div class="notes-container">
         <h2 class="notes-header">Bookings</h2>
-        <div><a href="booking_new"><i class="fa fa-plus plus-btn"></i></a></div>
+        <div><a href="booking/add"><i class="fa fa-plus plus-btn"></i></a></div>
     </div>
     <section id="cd-timeline">
-    	{% for booking in room.bookings %}
+    	{% for booking in room.roomBookings %}
             <div class="cd-timeline-block">
                 <div class="cd-timeline-img">
         			<img src="{{ asset('images/leanna.jpeg') }}" class="img-circle" alt="Leanna!">

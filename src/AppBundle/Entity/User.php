@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -70,6 +71,20 @@ class User implements UserInterface {
 	 * @var string
 	 */
 	private $name;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Booking", mappedBy="organiser")
+	 * 
+	 */
+	private $user_bookings;
+	
+	public function __construct(){
+		$this->user_bookings = new ArrayCollection();
+	}
+	
+	public function __toString() {
+		return $this->getName();
+	}
 	
 	public function getUsername() {
 		return $this->username;
@@ -145,6 +160,13 @@ class User implements UserInterface {
 		return $this;
 	}
 	
+	/**
+	 * 
+	 * @return ArrayCollection|Booking[]
+	 */
+	public function getUserBookings() {
+		return $this->user_bookings;
+	}
 	
 	
 }
