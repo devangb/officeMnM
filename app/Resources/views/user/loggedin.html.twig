@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+Logged in as {{ user.email }}
+Want to <a href="{{ path('security_logout') }}">Logout</a>
+{% endblock %}

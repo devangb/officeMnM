@@ -39,14 +39,14 @@ class Organisation {
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="Building", mappedBy="organisation")
-	 * 
+	 * @ORM\JoinColumn(nullable=false)
 	 * @var Building
 	 */
 	private $buildings;
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="User", mappedBy="user_organisation")
-	 * 
+	 * @ORM\JoinColumn(nullable=false)
 	 * @var Users
 	 */
 	private $organisation_users;

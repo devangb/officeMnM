@@ -12,6 +12,11 @@ class SecurityController extends Controller {
 	 * @Route("/login", name="security_login")
 	 */
 	public function loginAction() {
+		if($this->getUser()) {
+			return $this->render('user/loggedin.html.twig', [
+					'user' => $this->getUser()
+			]);
+		}
 		
 		$authenticationUtils = $this->get('security.authentication_utils');
 		

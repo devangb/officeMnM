@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 
 /**
@@ -37,14 +38,14 @@ class Building {
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="Room", mappedBy="building")
-	 * 
+	 * @ORM\JoinColumn(nullable=false)
 	 * @var rooms
 	 */
 	private $rooms;
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="User", mappedBy="primary_building")
-	 * 
+	 * @ORM\JoinColumn(nullable=false)
 	 * @var unknown
 	 */
 	private $building_users;

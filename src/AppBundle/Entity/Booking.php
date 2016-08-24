@@ -22,13 +22,14 @@ class Booking {
 	
 	/**
 	 * @ORM\ManyToOne(targetEntity="Room", inversedBy="room_bookings")
-	 * 
+	 * @ORM\JoinColumn(nullable=false)
 	 * @var Room
 	 */
 	private $room;
 	
 	/**
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="user_bookings")
+	 * @ORM\JoinColumn(nullable=false)
 	 * 
 	 * @var User
 	 */
@@ -54,6 +55,12 @@ class Booking {
 	 * @var \DateTime
 	 */
 	private $extended_time;
+	
+	/**
+	 * @ORM\Column(type="text")
+	 * @var string
+	 */
+	private $purpose;
 	
 	/**
 	 *
@@ -156,5 +163,24 @@ class Booking {
 		$this->extended_time = $extended_time;
 		return $this;
 	}
+	
+	/**
+	 *
+	 * @return the string
+	 */
+	public function getPurpose() {
+		return $this->purpose;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$purpose
+	 */
+	public function setPurpose($purpose) {
+		$this->purpose = $purpose;
+		return $this;
+	}
+	
 	
 }

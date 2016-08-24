@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity
@@ -52,6 +53,7 @@ class User implements UserInterface {
 	 * Organisation object
 	 * @ORM\ManyToOne(targetEntity="Organisation", inversedBy="organisation_users")
 	 * @ORM\JoinColumn(nullable=false)
+	 * 
 	 * @var Organisation
 	 */
 	private $user_organisation;
@@ -60,6 +62,7 @@ class User implements UserInterface {
 	 * Primary building for user
 	 * @ORM\ManyToOne(targetEntity="Building", inversedBy="building_users")
 	 * @ORM\JoinColumn(nullable=false)
+	 * 
 	 * @var Building
 	 */
 	private $primary_building;
@@ -74,7 +77,7 @@ class User implements UserInterface {
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="Booking", mappedBy="organiser")
-	 * 
+	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $user_bookings;
 	

@@ -8,12 +8,14 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use AppBundle\Entity\Booking;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class BookingAddForm extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder
-			->add('room')
-			->add('organiser')
+			//->add('room')
+			//->add('organiser')
+			->add('purpose', TextareaType::class)
 			->add('start_time', DateTimeType::class)
 			->add('end_time', DateTimeType::class)
 			->add('extended_time', DateTimeType::class)

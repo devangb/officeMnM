@@ -53,6 +53,8 @@ class Room {
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="Booking", mappedBy="room")
+	 * @ORM\JoinColumn(nullable=false)
+	 * 
 	 * @var unknown
 	 */
 	private $room_bookings;

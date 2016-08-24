@@ -26,7 +26,7 @@
     {% if(1) %}
     <div class="notes-container">
         <h2 class="notes-header">Bookings</h2>
-        <div><a href="booking/add"><i class="fa fa-plus plus-btn"></i></a></div>
+        <div><a href={{"#{ room.id }/booking/add"}}><i class="fa fa-plus plus-btn"></i></a></div>
     </div>
     <section id="cd-timeline">
     	{% for booking in room.roomBookings %}
@@ -35,9 +35,9 @@
         			<img src="{{ asset('images/leanna.jpeg') }}" class="img-circle" alt="Leanna!">
         		</div>
                 <div class="cd-timeline-content">
-        			<h2><a href="#">{{ booking.user }}</a></h2>
-        			<p>Fun Fact</p>
-        			<span class="cd-date">Dec. 10, 2015</span>
+        			<h2><a href="#">{{ booking.organiser }}</a></h2>
+        			<p>{{ booking.purpose }}</p>
+        			<span class="cd-date">{{ booking.startTime|date('Y-m-d-h-m') }} - {{ booking.endTime|date('Y-m-d-h-m') }}</span>
         		</div>
             </div>
         {% endfor %}
