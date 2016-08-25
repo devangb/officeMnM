@@ -23,12 +23,14 @@
         {% block header %}
         <header class="header">
             <img class="logo-icon" src="{{ asset('images/officemnm-logo.png') }}">
-            <h1 class="logo">OfficeMnM</h1>
+            <h3 class="logo"><a href="{{ path('homepage') }}">officemnm</a></h3>
             <ul class="navi">
                 <li class="search"><a href="#" class="js-header-search-toggle"><i class="fa fa-search"></i></a></li>
                 {% if is_granted('ROLE_USER') %}
+                	<li><a href="{{ path('user_bookings') }}">My bookings</a></li>
                     <li><a href="{{ path('security_logout') }}">Logout</a></li>
                 {% else %}
+                	<li><a href="{{ path('user_register') }}">Register</a></li>
                     <li><a href="{{ path('security_login') }}">Login</a></li>
                 {% endif %}
 
@@ -41,6 +43,16 @@
         	{% block flashmsg %}
             {% for msg in app.session.flashBag.get('success') %}
                 <div class="alert alert-success">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+            {% for msg in app.session.flashBag.get('notice') %}
+                <div class="alert alert-danger">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+            {% for msg in app.session.flashBag.get('warning') %}
+                <div class="alert alert-warning">
                     {{ msg }}
                 </div>
             {% endfor %}
@@ -58,6 +70,7 @@
         
         {% block javascripts %}
             <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
             <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
     </body>

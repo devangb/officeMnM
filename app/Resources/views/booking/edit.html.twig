@@ -31,7 +31,7 @@
 {{ form_label(bookingForm.purpose,null, {'attr': {'class': 'control-label'}}) }}
 {{ form_widget(bookingForm.purpose, {'attr': {'class': 'form-control', 'placeholder': 'Purpose of booking'}}) }}
 </div>
-<div class="form-group">
+	<div class="form-group">
         {{ form_errors(bookingForm.start_time) }}
           <div class='input-group date' id='datetimepicker'>
            {{ form_widget(bookingForm.start_time, {'attr': {'class': 'form-control input-inline datetimepicker', 'placeholder': 'Start time'}}) }}
@@ -44,6 +44,15 @@
         {{ form_errors(bookingForm.end_time) }}
           <div class='input-group date' id='datetimepicker1'>
            {{ form_widget(bookingForm.end_time, {'attr': {'class': 'form-control input-inline datetimepicker', 'placeholder': 'End time'}}) }}
+             <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+         </div>
+     </div>
+     <div class="form-group">
+        {{ form_errors(bookingForm.extended_time) }}
+          <div class='input-group date' id='datetimepicker2'>
+           {{ form_widget(bookingForm.extended_time, {'attr': {'class': 'form-control input-inline datetimepicker', 'placeholder': 'End time'}}) }}
              <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -72,6 +81,11 @@
                 sideBySide: true
             });
             $('#datetimepicker1').datetimepicker({
+                locale: 'en',
+                useCurrent: false,
+                sideBySide: true
+            });
+            $('#datetimepicker2').datetimepicker({
                 locale: 'en',
                 useCurrent: false,
                 sideBySide: true

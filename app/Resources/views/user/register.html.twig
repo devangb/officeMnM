@@ -3,23 +3,42 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-sm-4">
                 <h1>Register!</h1>
+                <div class="form">
                 {{ form_start(form) }}
-                	{{ form_row(form.name) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.plainPassword.first, {
-                        'label': 'Password'
-                    }) }}
-                    {{ form_row(form.plainPassword.second, {
-                        'label': 'Repeat Password'
-                    }) }}
-                    {{ form_row(form.user_organisation) }}
-                    {{ form_row(form.primary_building) }}
-                    <button type="submit" class="btn btn-primary" formnovalidate>Register</button>
+                <div class="form-group">
+                {{ form_label(form.name, null, {'attr': {'class': 'control-label'}}) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
+                </div>
+                <div class="form-group">
+                {{ form_label(form.email, null, {'attr': {'class': 'control-label'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'johndoe@example.com'}}) }}
+                </div>
+                <div class="form-group">
+                {{ form_label(form.plainPassword.first, 'Password', {'attr': {'class': 'control-label'}}) }}
+                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+                </div>
+                <div class="form-group">
+                {{ form_label(form.plainPassword.second, 'Repeat password', {'attr': {'class': 'control-label'}}) }}
+                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Repeat Password'}}) }}
+                </div>
+                <div class="form-group">
+                {{ form_label(form.user_organisation, "Organisation", {'attr': {'class': 'control-label'}}) }}
+                {{ form_widget(form.user_organisation, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                {{ form_label(form.primary_building, "Primary Building", {'attr': {'class': 'control-label'}}) }}
+                {{ form_widget(form.primary_building, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <button type="submit" class="btn btn-primary form-control" formnovalidate>Register</button>
                 {{ form_end(form) }}
-                &nbsp;
+   
+                </br>
             	<a href="{{ path('security_login') }}">I have an account!</a>
+                </div>
+               
+                    
             </div>
         </div>
     </div>

@@ -16,10 +16,6 @@
                 <dd>{{ room.capacity }}</dd>
                 <dt>Floor:</dt>
                 <dd>{{ room.roomFloor }}</dd>
-                <dt>Capacity:</dt>
-                <dd>{{ room.capacity }}</dd>
-                <dt>Fun Fact:</dt>
-                <dd>Octopuses can change the color of their body in just three-tenths of a second!</dd>
             </dl>
         </div>
     </div>
@@ -37,7 +33,7 @@
                 <div class="cd-timeline-content">
         			<h2><a href="#">{{ booking.organiser }}</a></h2>
         			<p>{{ booking.purpose }}</p>
-        			<span class="cd-date">{{ booking.startTime|date('Y-m-d-h-m') }} - {{ booking.endTime|date('Y-m-d-h-m') }}</span>
+        			<span class="cd-date">{{ booking.startTime|date('Y/m/d h:i') }} - {{ booking.extendedTime|date('Y/m/d h:i') }}</span>
         		</div>
             </div>
         {% endfor %}

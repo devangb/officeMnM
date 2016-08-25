@@ -13,6 +13,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator {
 

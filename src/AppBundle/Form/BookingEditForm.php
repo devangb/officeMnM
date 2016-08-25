@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use AppBundle\Entity\Booking;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class BookingAddForm extends AbstractType {
+class BookingEditForm extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder->
 		// ->add('room')
@@ -29,8 +29,15 @@ class BookingAddForm extends AbstractType {
 						'data-provide' => 'datepicker',
 						'data-date-format' => 'YYYY-MM-DD hh:mm' 
 				] 
+		] )
+		->add('extended_time', DateTimeType::class, [ 
+				'widget' => 'single_text',
+				'attr' => [ 
+						'class' => 'form-control input-inline datetimepicker',
+						'data-provide' => 'datepicker',
+						'data-date-format' => 'YYYY-MM-DD hh:mm' 
+				] 
 		] );
-		// ->add('extended_time', DateTimeType::class);
 	}
 	public function configureOptions(OptionsResolver $resolver) {
 		$resolver->setDefaults ( [ 

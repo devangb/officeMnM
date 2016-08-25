@@ -75,9 +75,10 @@ body {
 }
 
 .header {
-    padding: 10px 0;
+    padding: 0;
     margin: 0 auto;
-    background-color: #81B9BA;
+    background-color: #fff;
+    bottom-border-color: #
 }
 
 .logo-icon {
@@ -110,14 +111,14 @@ body {
     background-color: transparent;
 }
 
-.navi li:last-child a {
-    background: #eee;
+.navi li a {
+    /*background: #eee;*/
     border-radius: 2px;
     transition: 200ms ease-in-out;
     padding: 8px 16px 7px;
 }
 
-.navi li:last-child a:hover {
+.navi li a:hover {
     background: rgba(200, 200, 200, .5);
     color: #000;
 }
@@ -143,6 +144,7 @@ body {
     }
 
 }
+
 
 /******************************
 BODY Styling
@@ -191,6 +193,13 @@ BODY Styling
     content: '';
     display: table;
     clear: both;
+}
+
+.btn-primary.btn {
+	border-color: #ff5a5f;
+    border-bottom-color: #e00007;
+    background-color: #ff5a5f;
+    color: #fff;
 }
 
 /* --------------------------------
@@ -403,7 +412,7 @@ Main components
     background: #eee;
     border-radius: 0.25em;
     padding: 1em;
-    box-shadow: 0 3px 0 #d7e4ed;
+    box-shadow: 0 2px 0 #ff5a5f;
 }
 
 .cd-timeline-content:after {

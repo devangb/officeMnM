@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	</br>
+	<div>
+    {% for booking in bookings %}
+            <div class="cd-timeline-block">
+                <div class="cd-timeline-img">
+        			<img src="{{ asset('images/leanna.jpeg') }}" class="img-circle" alt="Leanna!">
+        		</div>
+                <div class="cd-timeline-content">
+        			<h2><a href="#">{{ booking.room }}</a></h2>
+        			<p>{{ booking.purpose }}</p>
+        			<a href={{ path('booking_edit', {'bookingId': booking.id}) }}>Edit</a>
+        			<span class="cd-date">{{ booking.startTime|date('Y-m-d-h-m') }} - {{ booking.endTime|date('Y-m-d-h-m') }}</span>
+        		</div>
+            </div>
+        {% endfor %}
+        </div>
+        </br>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script type="text/babel" src="{{ asset('js/notes.react.js') }}"></script>
+    <script type="text/babel">
+        var notesUrl = '{{ path('user_bookings') }}';
+        ReactDOM.render(
+          <NoteSection url={notesUrl} />,
+          document.getElementById('js-notes-wrapper')
+        );
+    </script>
+{% endblock %}
