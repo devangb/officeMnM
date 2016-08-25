@@ -8,6 +8,9 @@ use AppBundle\Form\LoginForm;
 
 class SecurityController extends Controller {
 	
+	/*
+	 * Login handling
+	 */
 	/**
 	 * @Route("/login", name="security_login")
 	 */
@@ -18,13 +21,13 @@ class SecurityController extends Controller {
 			] );
 		}
 		
-		$authenticationUtils = $this->get ( 'security.authentication_utils' );
+		$authenticationUtils = $this->get( 'security.authentication_utils' );
 		
 		// get the login error if there is one
-		$error = $authenticationUtils->getLastAuthenticationError ();
+		$error = $authenticationUtils->getLastAuthenticationError();
 		
 		// last username entered by the user
-		$lastUsername = $authenticationUtils->getLastUsername ();
+		$lastUsername = $authenticationUtils->getLastUsername();
 		
 		$form = $this->createForm ( LoginForm::class, [ 
 				'_username' => $lastUsername 
@@ -36,6 +39,10 @@ class SecurityController extends Controller {
 		) );
 	}
 	
+	/*
+	 * Logout action
+	 * Should never be reached
+	 */
 	/**
 	 * @Route("/logout", name="security_logout")
 	 */

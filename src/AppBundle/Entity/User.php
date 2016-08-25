@@ -61,7 +61,7 @@ class User implements UserInterface {
 	/**
 	 * Primary building for user
 	 * @ORM\ManyToOne(targetEntity="Building", inversedBy="building_users")
-	 * @ORM\JoinColumn(nullable=false)
+	 * @ORM\JoinColumn(nullable=true)
 	 * 
 	 * @var Building
 	 */

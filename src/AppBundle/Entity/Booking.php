@@ -62,6 +62,13 @@ class Booking {
 	private $purpose;
 	
 	/**
+	 * @ORM\Column(type="integer")
+	 * 
+	 * @var interger
+	 */
+	private $capacity;
+	
+	/**
 	 *
 	 * @return the id
 	 */
@@ -180,6 +187,25 @@ class Booking {
 		$this->purpose = $purpose;
 		return $this;
 	}
+	
+	/**
+	 *
+	 * @return the interger
+	 */
+	public function getCapacity() {
+		return $this->capacity;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$capacity
+	 */
+	public function setCapacity($capacity) {
+		$this->capacity = $capacity;
+		return $this;
+	}
+	
 	
 	
 }

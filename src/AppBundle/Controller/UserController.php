@@ -20,29 +20,38 @@ class UserController extends Controller {
 	 * @Route("/register", name="user_register")
 	 */
 	public function registerAction(Request $request) {
-		if ($this->getUser ()) {
+		if ($this->getUser()) {
 			return $this->render ( 'user/loggedin.html.twig', [ 
-					'user' => $this->getUser () 
-			] );
+					'user' => $this->getUser() 
+			]);
 		}
-		$form = $this->createForm ( UserRegistrationForm::class );
 		
-		$form->handleRequest ( $request );
-		if ($form->isValid ()) {
+		$form = $this->createForm(UserRegistrationForm::class);
+		
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 			/**@var User user **/
 			$user = $form->getData ();
-			$em = $this->getDoctrine ()->getManager ();
-			$em->persist ( $user );
-			$em->flush ();
 			
-			$this->addFlash ( 'success', 'Welcome ' . $user->getEmail () );
+			try {
+				$em = $this->getDoctrine ()->getManager ();
+				$em->persist ( $user );
+				$em->flush ();
 			
-			return $this->get ( 'security.authentication.guard_handler' )->authenticateUserAndHandleSuccess ( $user, $request, $this->get ( 'app.security.login_form_authenticator' ), 'main' );
+				$this->addFlash ( 'success', 'Welcome ' . $user->getEmail () );
+			}
+			catch (\Exception $e) {
+				error_log($e->getMessage());
+				$this->addFlash('notice', 'Something went wrong!');
+			}
+			return $this->get('security.authentication.guard_handler')
+				->authenticateUserAndHandleSuccess ( $user, $request, 
+						$this->get('app.security.login_form_authenticator'), 'main');
 		}
 		
 		return $this->render ( 'user/register.html.twig', [ 
-				'form' => $form->createView () 
-		] );
+				'form' => $form->createView() 
+		]);
 	}
 	
 	/* 
@@ -56,29 +65,35 @@ class UserController extends Controller {
 	 * @param Request $request        	
 	 */
 	public function editAction(Request $request) {
-		if (! $this->getUser ()) {
+		if (! $this->getUser()) {
 			$this->addFlash ( 'notice', 'Login please!' );
 			return $this->redirectToRoute ( 'security_login' );
 		}
 		
-		$form = $this->createForm ( UserRegistrationForm::class, $this->getUser () );
+		$form = $this->createForm ( UserRegistrationForm::class, $this->getUser() );
 		
 		$form->handleRequest ( $request );
 		if ($form->isValid ()) {
 			/**@var User user **/
-			$user = $form->getData ();
-			$em = $this->getDoctrine ()->getManager ();
-			$em->persist ( $user );
-			$em->flush ();
+			$user = $form->getData();
+			try {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($user);
+				$em->flush();
 			
-			$this->addFlash ( 'success', 'Welcome ' . $user->getEmail () );
+				$this->addFlash ( 'success', 'Welcome ' . $user->getEmail() );
+			}
+			catch (\Exception $e) {
+				error_log($e->getMessage());
+				$this->addFlash('notice', 'Something went wrong!');
+			}
 			
-			return $this->redirectToRoute ( 'homepage' );
+			return $this->redirectToRoute('homepage');
 		}
 		
 		return $this->render ( 'user/register.html.twig', [ 
-				'form' => $form->createView () 
-		] );
+				'form' => $form->createView() 
+		]);
 	}
 	
 	
@@ -96,7 +111,13 @@ class UserController extends Controller {
 			return $this->redirectToRoute ( 'security_login' );
 		}
 		
-		$bookings = $this->getUser ()->getUserBookings ();
+		try {
+			$bookings = $this->getUser()->getUserBookings ();
+		}
+		catch (\Exception $e) {
+			error_log($e->getMessage());
+			$this->addFlash('notice', 'Something went wrong!');
+		}
 		
 		return $this->render ( 'user/bookings.html.twig', [ 
 				'bookings' => $bookings

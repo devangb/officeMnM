@@ -16,7 +16,7 @@ class BookingController extends Controller {
 	 * @Route("room/{roomId}/booking/add", name="booking_add")
 	 */
 	public function addAction(Request $request, $roomId, $capacity = 0) {
-		if (! $this->getUser ()) {
+		if (!$this->getUser ()) {
 			$this->addFlash ( 'notice', 'Login please!' );
 			return $this->redirectToRoute ( 'security_login' );
 		}
@@ -70,15 +70,51 @@ class BookingController extends Controller {
 		$form->handleRequest ( $request );
 		if ($form->isSubmitted () && $form->isValid ()) {
 			$booking = $form->getData ();
+			
+			// Reallocation for conflicting bookings
+			/*********************************
 			if($booking->getExtendedTime() != $booking->getEndTime()) {
 				$bookings = $booking->getRoom()->getRoomBookings();
 				foreach ($bookings as $checkbooking) {
 					if ($checkbooking->getStartTime() > $booking->getEndTime() 
 							&& $checkbooking->getStartTime() < $booking->getExtendedTime()) {
-								//TO-DO reallocate the further bookings
+								
+								$em = $this->getDoctrine ()->getManager ();
+								$rooms = $em->getRepository('AppBundle:Room')
+									->findBy([ 'building' => $booking->getRoom()->getBuilding()]);
+								
+								$unavailable_rooms = array ();
+								foreach ( $rooms as $room ) {
+									if ($room->getCapacity() < $booking->getCapacity()){
+										array_push($unavailable_rooms, $room);
+									}
+									else {
+									foreach ( $room->getRoomBookings() as $booking ) {
+										if ($booking->getExtendedTime() < $checkbooking->getStartTime() && $booking->getStartTime () > $checkbooking->getStartTime()) {
+											array_push ( $unavailable_rooms, $room );
+											break;
+										} elseif ($booking->getStartTime() < $checkbooking->getExtendedTime() && $booking->getExtendedTime() > $checkbooking->getExtendedTime()) {
+											array_push ( $unavailable_rooms, $room );
+											break;
+										} elseif ($booking->getStartTime() > $checkbooking->getStartTime() && $booking->getExtendedTime() < $checkbooking->getExtendedTime()) {
+											array_push ( $unavailable_rooms, $room );
+											break;
+										} elseif ($booking->getStartTime() < $checkbooking->getStartTime() && $booking->getExtendedTime() > $checkbooking->getExtendedTime()) {
+											array_push ( $unavailable_rooms, $room );
+											break;
+										}
+									}
+									}
+								}
+										
+								$available_rooms = array_diff ( $rooms, $unavailable_rooms );
+								if(!$available_rooms) {
+									$this->addFlash('notice', 'Extension not possible');
+								}
 							}
 				}
 			}
+			*******************************/
 			
 			$em = $this->getDoctrine ()->getManager ();
 			$em->persist ( $booking );

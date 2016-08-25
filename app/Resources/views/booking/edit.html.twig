@@ -31,6 +31,10 @@
 {{ form_label(bookingForm.purpose,null, {'attr': {'class': 'control-label'}}) }}
 {{ form_widget(bookingForm.purpose, {'attr': {'class': 'form-control', 'placeholder': 'Purpose of booking'}}) }}
 </div>
+<div class="form-group">
+{{ form_label(bookingForm.capacity,null, {'attr': {'class': 'control-label'}}) }}
+{{ form_widget(bookingForm.capacity, {'attr': {'class': 'form-control', 'placeholder': 'Needed capacity'}}) }}
+</div>
 	<div class="form-group">
 		{{ form_label(bookingForm.start_time,null, {'attr': {'class': 'control-label'}}) }}
         {{ form_errors(bookingForm.start_time) }}

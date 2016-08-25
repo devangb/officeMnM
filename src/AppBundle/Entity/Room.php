@@ -59,6 +59,24 @@ class Room {
 	 */
 	private $room_bookings;
 	
+	/**
+	 * @ORM\Column(type="boolean")
+	 *
+	 * @var boolean
+	 */
+	private $has_projector = FALSE;
+	
+	/**
+	 * @ORM\Column(type="boolean")
+	 * 
+	 * @var boolean
+	 */
+	private $has_whiteboard = FALSE;
+	
+	
+	
+	
+	
 	public function __construct() {
 		$this->room_bookings =  new ArrayCollection();
 	}
@@ -110,6 +128,44 @@ class Room {
 	public function getRoomBookings() {
 		return $this->room_bookings;
 	}
+	
+	/**
+	 *
+	 * @return the boolean
+	 */
+	public function getHasProjector() {
+		return $this->has_projector;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$has_projector
+	 */
+	public function setHasProjector($has_projector) {
+		$this->has_projector = $has_projector;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the boolean
+	 */
+	public function getHasWhiteboard() {
+		return $this->has_whiteboard;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$has_whiteboard
+	 */
+	public function setHasWhiteboard($has_whiteboard) {
+		$this->has_whiteboard = $has_whiteboard;
+		return $this;
+	}
+	
+	
 	
 	
 	

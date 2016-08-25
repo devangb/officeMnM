@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class OrganisationController extends Controller {
 	
+	/*
+	 * Add Organisation-only accessible to overall admin
+	 */
 	/**
 	 * @Route("/organisation/add", name="organisation_add")
 	 */
@@ -29,11 +32,17 @@ class OrganisationController extends Controller {
 		if ($form->isSubmitted () && $form->isValid ()) {
 			$organisation = $form->getData ();
 			
-			$em = $this->getDoctrine ()->getManager ();
-			$em->persist ( $organisation );
-			$em->flush ();
+			try {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist( $organisation );
+				$em->flush();
+			}
+			catch (\Exception $e) {
+				error_log($e->getMessage());
+				$this->addFlash('notice', 'Something went wrong!');
+			}
 			
-			return $this->redirectToRoute ( 'organisation_list' );
+			return $this->redirectToRoute ( 'homepage' );
 		}
 		
 		return $this->render ( 'organisation/add.html.twig', [ 
@@ -42,7 +51,7 @@ class OrganisationController extends Controller {
 	}
 	
 	/**
-	 * @Route("/organisation/{organisation}/buildings", name="organisation_show_buildings")
+	 * @Route("/organisation/{organisation_name}/buildings", name="organisation_show_buildings")
 	 * 
 	 * @method ("GET")
 	 *        
@@ -51,13 +60,14 @@ class OrganisationController extends Controller {
 	public function getBuildingsAction($organisation_name) {
 		$em = $this->getDoctrine ()->getManager ();
 		
+		
 		$organisation = $em->getRepository ( 'AppBundle:Organisation' )->findOneBy ( [ 
 				'organisation_name' => $organisation_name 
 		] );
 		
 		$buildings = [ ];
 		
-		foreach ( $organisation->getBuildings () as $building ) {
+		foreach ( $organisation->getBuildings() as $building ) {
 			array_push ( $buildings, [ 
 					'id' => $building->getId (),
 					'buildingName' => $building->getBuildingName () 

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use AppBundle\Entity\Room;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class RoomAddForm extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -17,6 +18,8 @@ class RoomAddForm extends AbstractType {
 			->add('room_name', TextType::class)
 			->add('capacity', IntegerType::class)
 			->add('room_floor', IntegerType::class)
+			->add('has_projector', CheckboxType::class)
+			->add('has_whiteboard', CheckboxType::class)
 			->add('save', SubmitType::class, array('label' => 'Add room'));
 	}
 	
