@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Organisation</th>
+                <th>Domain</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for organisation in organisations %}
+                <tr>
+                    <td>{{ organisation.organisationName }}</a></td>
+                    <td>{{ organisation.organisationDomain }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

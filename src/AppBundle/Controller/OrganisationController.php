@@ -42,12 +42,38 @@ class OrganisationController extends Controller {
 				$this->addFlash('notice', 'Something went wrong!');
 			}
 			
-			return $this->redirectToRoute ( 'homepage' );
+			return $this->redirectToRoute ( 'organisation_list' );
 		}
 		
 		return $this->render ( 'organisation/add.html.twig', [ 
 				'organisationForm' => $form->createView () 
 		] );
+	}
+	
+	/*
+	 * List all registered organisation
+	 */
+	/**
+	 * @Route("/organisation", name="organisation_list")
+	 */
+	public function listAction() {
+		if (! $this->getUser ()) {
+			$this->addFlash ( 'notice', 'Login please!' );
+			return $this->redirectToRoute ( 'security_login' );
+		}
+	
+		try {
+			$em = $this->getDoctrine ()->getManager ();
+			$organisations = $em->getRepository('AppBundle:Organisation')
+					->findAll();
+		}
+		catch (\Exception $e) {
+			error_log($e->getMessage());
+			$this->addFlash('notice', 'Something went wrong!');
+		}
+		return $this->render ( 'organisation/list.html.twig', [
+				'organisations' => $organisations
+		]);
 	}
 	
 	/**

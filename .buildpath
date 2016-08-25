@@ -36,9 +36,11 @@
 	<buildpathentry kind="src" path="vendor/doctrine/inflector/lib"/>
 	<buildpathentry kind="src" path="vendor/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs"/>
 	<buildpathentry kind="src" path="app"/>
+	<buildpathentry kind="src" path="vendor/sentry/sentry-symfony/src"/>
 	<buildpathentry kind="src" path="vendor/jdorn/sql-formatter/lib"/>
 	<buildpathentry kind="src" path="vendor/doctrine/collections/lib"/>
 	<buildpathentry kind="src" path="vendor/zendframework/zend-eventmanager/src"/>
+	<buildpathentry kind="src" path="vendor/sentry/sentry/lib"/>
 	<buildpathentry kind="src" path="vendor/monolog/monolog/src/Monolog"/>
 	<buildpathentry kind="src" path="vendor/symfony/polyfill-intl-icu"/>
 	<buildpathentry kind="src" path="vendor/symfony/symfony/src/Symfony/Bridge/Monolog"/>
