@@ -9,7 +9,7 @@
         			<img src="{{ asset('images/leanna.jpeg') }}" class="img-circle" alt="Leanna!">
         		</div>
                 <div class="cd-timeline-content">
-        			<h2><a href="#">{{ booking.room }}</a></h2>
+        			<h2><a href="{{ path('room_show', { 'roomId':  booking.room.id } ) }}">{{ booking.room }}</a></h2>
         			<p>{{ booking.purpose }}</p>
         			<a href={{ path('booking_edit', {'bookingId': booking.id}) }}>Edit</a>
         			<span class="cd-date">{{ booking.startTime|date('Y-m-d-h-m') }} - {{ booking.endTime|date('Y-m-d-h-m') }}</span>

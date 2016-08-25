@@ -22,7 +22,7 @@
     {% if(1) %}
     <div class="notes-container">
         <h2 class="notes-header">Bookings</h2>
-        <div><a href={{"#{ room.id }/booking/add"}}><i class="fa fa-plus plus-btn"></i></a></div>
+        <div><a href="{{ path('booking_add', {'roomId': room.id }) }}"><i class="fa fa-plus plus-btn"></i></a></div>
     </div>
     <section id="cd-timeline">
     	{% for booking in room.roomBookings %}
