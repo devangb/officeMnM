@@ -5,15 +5,14 @@
         <thead>
             <tr>
                 <th>Organisation</th>
-                <th>Domain</th>
+                <th>Buildings</th>
             </tr>
         </thead>
         <tbody>
             {% for organisation in organisations %}
                 <tr>
-                    <td>{{ organisation.organisationName }}</td>
-                    <td>{{ organisation.organisationDomain }}</td>
-
+                    <td>{{ building.organisationName }}</td>
+                    <td>{{ building.buildingName }}</td>
                 </tr>
             {% endfor %}
         </tbody>
