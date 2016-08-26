@@ -115,10 +115,15 @@ class OrganisationController extends Controller {
 	public function getRoomsActions($organisation_name) {
 		$em = $this->getDoctrine ()->getManager ();
 		
+		try {
 		$organisation = $em->getRepository ( 'AppBundle:Organisation' )->findOneBy ( [ 
 				'organisation_name' => $organisation_name 
 		] );
-		
+		}
+		catch (\Exception $e){
+			error_log($e->getMessage());
+			$this->addFlash('notice', 'Something went wrong!');
+		}
 		$rooms = [ ];
 		
 		foreach ( $organisation->getBuildings () as $building ) {

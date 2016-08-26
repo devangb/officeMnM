@@ -33,15 +33,47 @@ class BookingController extends Controller {
 		$form->handleRequest ( $request );
 		if ($form->isSubmitted () && $form->isValid ()) {
 			$booking = $form->getData ();
+			$availability = 1;
+			foreach ( $room->getRoomBookings() as $checkbooking ) {
+				if ($checkbooking->getExtendedTime() < $booking->getStartTime()
+						&& $checkbooking->getStartTime () > $booking->getStartTime()) {
+					$availability = 0;
+					break;
+				} elseif ($checkbooking->getStartTime() < $booking->getExtendedTime()
+						&& $checkbooking->getExtendedTime() > $booking->getExtendedTime()) {
+					$availability = 0;
+					break;
+				} elseif ($checkbooking->getStartTime() > $booking->getStartTime() && $checkbooking->getExtendedTime() < $booking->getExtendedTime()) {
+					$availability = 0;
+					break;
+				} elseif ($checkbooking->getStartTime() < $booking->getStartTime() && $checkbooking->getExtendedTime() > $booking->getExtendedTime()) {
+					$availability = 0;
+					break;
+				}
+			}
+			if($booking->getEndTime() < $booking->getStartTime()){
+				$this->addFlash('warning', 'End time cannot be before start time');
+			}
+			elseif ($availability == 0) {
+				$this->addFlash('warning', 'Room is already booked for this time');
+			}
+			else {
 			$booking->setExtendedTime($booking->getEndTime());
 			
+			try {
 			$em = $this->getDoctrine ()->getManager ();
 			$em->persist ( $booking );
 			$em->flush ();
+			}
+			catch (\Exception $e) {
+				error_log($e->getMessage());
+				$this->addFlash('notice', 'Something went wrong');
+			}
 			
 			return $this->redirectToRoute ( 'room_show', array (
 					'roomId' => $roomId 
 			) );
+			}
 		}
 		
 		return $this->render ( 'booking/add.html.twig', [ 
