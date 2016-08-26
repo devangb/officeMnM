@@ -18,7 +18,7 @@ class UserRegistrationForm extends AbstractType {
 			->add('email', EmailType::class)
 			->add('name', TextType::class)
 			->add('user_organisation')
-			->add('primary_building')
+			//->add('primary_building')
 			->add('plainPassword', RepeatedType::class, [
 					'type' => PasswordType::class
 			]);

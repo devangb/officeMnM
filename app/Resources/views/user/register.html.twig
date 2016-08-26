@@ -31,10 +31,12 @@
                 {{ form_label(form.user_organisation, "Organisation", {'attr': {'class': 'control-label'}}) }}
                 {{ form_widget(form.user_organisation, {'attr': {'class': 'form-control'}}) }}
                 </div>
+                {% if(0) %}
                 <div class="form-group">
                 {{ form_label(form.primary_building, "Primary Building", {'attr': {'class': 'control-label'}}) }}
                 {{ form_widget(form.primary_building, {'attr': {'class': 'form-control'}}) }}
                 </div>
+                {% endif %}
                 <button type="submit" class="btn btn-primary form-control" formnovalidate>Register</button>
                 {{ form_end(form) }}
    

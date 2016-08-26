@@ -18,6 +18,18 @@
                 <dd>{{ room.capacity }}</dd>
                 <dt>Floor:</dt>
                 <dd>{{ room.roomFloor }}</dd>
+                <dt>Projector:</dt>
+                <dd>{% if(room.hasProjector) %}
+                		Available
+                	{% else %}
+                		Not Available
+                	{% endif %}</dd>
+                <dt>Whiteboard:</dt>
+                <dd>{% if(room.hasWhiteboard) %}
+                		Available
+                	{% else %}
+                		Not available
+                	{% endif %}</dd>
             </dl>
         </div>
     </div>

@@ -16,6 +16,18 @@
                 <dd>{{ room.capacity }}</dd>
                 <dt>Floor:</dt>
                 <dd>{{ room.roomFloor }}</dd>
+                <dt>Projector:</dt>
+                <dd>{% if(room.hasProjector) %}
+                		Available
+                	{% else %}
+                		Not Available
+                	{% endif %}</dd>
+                <dt>Whiteboard:</dt>
+                <dd>{% if(room.hasWhiteboard) %}
+                		Available
+                	{% else %}
+                		Not available
+                	{% endif %}</dd>
             </dl>
         </div>
     </div>
@@ -33,6 +45,7 @@
                 <div class="cd-timeline-content">
         			<h2><a href="#">{{ booking.organiser }}</a></h2>
         			<p>{{ booking.purpose }}</p>
+        			{% if(currentUser == booking.organiser) %}<a href={{ path('booking_edit', {'bookingId': booking.id}) }}>Edit</a>{% endif %}
         			<span class="cd-date">{{ booking.startTime|date('Y/m/d h:i') }} - {{ booking.extendedTime|date('Y/m/d h:i') }}</span>
         		</div>
             </div>
