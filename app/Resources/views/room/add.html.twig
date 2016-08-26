@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ form_start(roomForm) }}
+{{ form_start(roomForm, {'attr': {'novalidate': 'novalidate'}}) }}
 {{ form_widget(roomForm) }}
 {{ form_end(roomForm) }}
 {% endblock %}

@@ -159,7 +159,7 @@ class RoomController extends Controller {
 	 * @Route("/room", name="room_list")
 	 */
 	public function listAction() {
-		if (! $this->getUser ()) {
+		if (!$this->getUser ()) {
 			$this->addFlash ( 'notice', 'Login please!' );
 			return $this->redirectToRoute ( 'security_login' );
 		}
