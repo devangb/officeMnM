@@ -33,16 +33,15 @@ class RoomController extends Controller {
 			$this->addFlash( 'notice', 'Login please!' );
 			return $this->redirectToRoute('security_login');
 		}
-		$form = $this->createForm( RoomAddForm::class );
+		$form = $this->createForm( RoomAddForm::class);
 		
 		$form->handleRequest ( $request );
 		if ($form->isSubmitted () && $form->isValid ()) {
-			$room = $form->getData ();
-			
+			$room = $form->getData();
 			try {
-				$em = $this->getDoctrine ()->getManager ();
-				$em->persist ( $room );
-				$em->flush ();
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($room);
+				$em->flush();
 			}
 			catch (\Exception $e){
 				error_log($e->getMessage());
@@ -67,25 +66,31 @@ class RoomController extends Controller {
 	 * @param Request $request        	
 	 */
 	public function editAction(Request $request, $roomId) {
-		if (! $this->getUser ()) {
+		/*if (! $this->getUser ()) {
 			$this->addFlash ( 'notice', 'Login please!' );
 			return $this->redirectToRoute ( 'security_login' );
-		}
-		try {
+		}*/
+		//try {
 			$em = $this->getDoctrine()->getManager();
 			$room = $em->getRepository( 'AppBundle:Room' )->findOneBy( [ 
 					'id' => $roomId 
 			]);
-		}
-		catch (\Exception $e) {
-			error_log($e->getMessage());
-			$this->addFlash('notice', 'Room has gone missing!');
-		}
-		$form = $this->createForm ( RoomAddForm::class, $room );
+			
+			$fileName = $room->getRoomPhoto();
+			$room->setRoomPhoto(null);
+		//}
+// 		catch (\Exception $e) {
+// 			error_log($e->getMessage());
+// 			$this->addFlash('notice', 'Room has gone missing!');
+// 		}
+		$form = $this->createForm(RoomAddForm::class, $room );
 		
 		$form->handleRequest( $request );
 		if ($form->isSubmitted() && $form->isValid()) {
 			$room = $form->getData();
+			if ($room->getRoomPhoto() == null) {
+				$room->setRoomPhoto($fileName);
+			}
 			
 			try {
 				$em = $this->getDoctrine()->getManager();
@@ -105,6 +110,25 @@ class RoomController extends Controller {
 		return $this->render ( 'room/edit.html.twig', [ 
 				'roomForm' => $form->createView() 
 		] );
+	}
+	
+	/**
+	 * @Route("/room/{roomId}/delete", name="room_delete")
+	 */
+	public function deleteAction($roomId) {
+		$em = $this->getDoctrine()->getManager();
+		
+		$room = $em->getRepository('AppBundle:Room')
+				->findOneBy(['id' => $roomId ]);
+		foreach ($room->getRoomBookings() as $booking) {
+			$em->remove($booking);
+			$em->flush();
+		}
+		
+		$em->remove($room);
+		$em->flush();
+		
+		return $this->redirectToRoute('room_list');
 	}
 	
 	
@@ -164,7 +188,7 @@ class RoomController extends Controller {
 			return $this->redirectToRoute ( 'security_login' );
 		}
 		
-		try {
+		//try {
 		$em = $this->getDoctrine ()->getManager ();
 		$rooms = $em->createQueryBuilder ()
 				->select ( 'r' )->from ( 'AppBundle:Room', 'r' )
@@ -174,14 +198,15 @@ class RoomController extends Controller {
 				->getQuery ()->getResult ();
 			// $rooms = $em->getRepository('AppBundle:Room')
 			// ->findBy(array('building' => $this->getUser()->getUserOrganisation()));
-		}
-		catch (\Exception $e) {
-			error_log($e->getMessage());
-			$this->addFlash('notice', 'Something went wrong!');
-		}
+		
 		return $this->render ( 'room/list.html.twig', [ 
 				'rooms' => $rooms, 'currentUser' =>$this->getUser()
 		]);
+		//}
+// 		catch (\Exception $e) {
+// 			error_log($e->getMessage());
+// 			$this->addFlash('notice', 'Something went wrong!');
+// 		}
 	}
 	
 	/**
@@ -192,7 +217,6 @@ class RoomController extends Controller {
 			// $this->addFlash('notice', 'Login please!');
 			return $this->redirectToRoute ( 'security_login' );
 		}
-		
 		$buildings = $this->getUser()->getUserOrganisation()->getBuildings();
 		$buildingNames = array ();
 		foreach ( $buildings as $building ) {
@@ -225,9 +249,8 @@ class RoomController extends Controller {
 				$search["capacity"] = 0;
 			}
 			
-			try {
-				$em = $this->getDoctrine()->getManager();
-				$rooms = $em->createQueryBuilder ()->select ( 'r' )
+			$em = $this->getDoctrine()->getManager();
+			$rooms = $em->createQueryBuilder ()->select ( 'r' )
 					->from ( 'AppBundle:Room', 'r' )
 					->innerjoin ( 'r.building', 'b', 'WITH', 'b.id = r.building' )
 					->where ( 'b.organisation = :organisation' )
@@ -237,11 +260,6 @@ class RoomController extends Controller {
 					->andWhere ( 'r.capacity >= :capacity' )
 					->setParameter ( 'capacity', $search["capacity"] )
 					->getQuery ()->getResult ();
-			}
-			catch (\Exception $e) {
-				error_log($e->getMessage());
-				$this->addFlash('notice', 'Something went wrong!');
-			}
 			
 			$unavailable_rooms = array ();
 			foreach ( $rooms as $room ) {
@@ -275,6 +293,7 @@ class RoomController extends Controller {
 			return $this->render ( 'room/list.html.twig', [ 
 					'rooms' => $available_rooms 
 			] );
+				
 		}
 		
 		return $this->render ( 'room/search.html.twig', [ 

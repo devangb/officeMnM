@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * 
@@ -47,6 +48,7 @@ class Room {
 	 * @ORM\ManyToOne(targetEntity="Building", inversedBy="rooms")
 	 * @ORM\JoinColumn(nullable=false)
 	 * 
+	 * @Assert\NotBlank()
 	 * @var building
 	 */
 	private $building;
@@ -74,7 +76,12 @@ class Room {
 	private $has_whiteboard = FALSE;
 	
 	
-	
+	/**
+	 * @ORM\Column(type="string", nullable=true)
+	 * 
+	 * @Assert\File(mimeTypes={"image/jpeg"})
+	 */
+	private $room_photo = 'room.jpg';
 	
 	
 	public function __construct() {
@@ -164,6 +171,24 @@ class Room {
 		$this->has_whiteboard = $has_whiteboard;
 		return $this;
 	}
+	
+	/**
+	 *
+	 * @return the unknown_type
+	 */
+	public function getRoomPhoto() {
+		return $this->room_photo;
+	}
+	
+	/**
+	 *
+	 * @param unknown_type $room_photo        	
+	 */
+	public function setRoomPhoto($room_photo) {
+		$this->room_photo = $room_photo;
+		return $this;
+	}
+	
 	
 	
 	

@@ -1,7 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ form_start(roomForm, {'attr': {'novalidate': 'novalidate'}}) }}
-{{ form_widget(roomForm) }}
+<div class="form">
+ <div class="col-sm-4">
+{{ form_start(roomForm) }}
+<div class="form-group">
+{{ form_label(roomForm.building,null, {'attr': {'class': 'control-label'}}) }}
+{{ form_widget(roomForm.building, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(roomForm.room_name,null, {'attr': {'class': 'control-label'}}) }}
+{{ form_widget(roomForm.room_name, {'attr': {'class': 'form-control', 'placeholder': 'Room name'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(roomForm.capacity,null, {'attr': {'class': 'control-label'}}) }}
+{{ form_widget(roomForm.capacity, {'attr': {'class': 'form-control', 'placeholder': 'Capacity'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(roomForm.room_floor,null, {'attr': {'class': 'control-label'}}) }}
+{{ form_widget(roomForm.room_floor, {'attr': {'class': 'form-control', 'placeholder': 'Room floor'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(roomForm.has_projector,'Projector', {'attr': {'class': 'check-label'}}) }}
+{{ form_widget(roomForm.has_projector, {'attr': {'class': 'check-input', 'placeholder': 'Projector available'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(roomForm.has_whiteboard, 'Whiteboard', {'attr': {'class': 'check-label', 'label': 'Whiteboard'}}) }}
+{{ form_widget(roomForm.has_whiteboard, {'attr': {'class': 'check-input', 'placeholder': 'Whiteboard available'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(roomForm.room_photo, 'Photo (<2Mb, jpeg)', {'attr': {'class': 'custom-file'}}) }}
+{{ form_widget(roomForm.room_photo, {'attr': {'class': 'custom-file-input custom-file-control', 'placeholder': 'Photo file'}}) }}
+</div>
+<button type="submit" class="btn btn-primary form-control" formnovalidate>Add</button>
 {{ form_end(roomForm) }}
+</div>
+</div>
 {% endblock %}

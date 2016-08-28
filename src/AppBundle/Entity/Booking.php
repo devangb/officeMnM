@@ -154,7 +154,6 @@ class Booking {
 	}
 	
 	/**
-	 *
 	 * @return the DateTime
 	 */
 	public function getExtendedTime() {
@@ -162,7 +161,6 @@ class Booking {
 	}
 	
 	/**
-	 *
 	 * @param \DateTime $extended_time        	
 	 */
 	public function setExtendedTime(\DateTime $extended_time) {
@@ -171,7 +169,6 @@ class Booking {
 	}
 	
 	/**
-	 *
 	 * @return the string
 	 */
 	public function getPurpose() {
@@ -179,9 +176,7 @@ class Booking {
 	}
 	
 	/**
-	 *
-	 * @param
-	 *        	$purpose
+	 * @param $purpose
 	 */
 	public function setPurpose($purpose) {
 		$this->purpose = $purpose;
@@ -189,7 +184,6 @@ class Booking {
 	}
 	
 	/**
-	 *
 	 * @return the interger
 	 */
 	public function getCapacity() {
@@ -197,9 +191,7 @@ class Booking {
 	}
 	
 	/**
-	 *
-	 * @param
-	 *        	$capacity
+	 * @param $capacity
 	 */
 	public function setCapacity($capacity) {
 		$this->capacity = $capacity;

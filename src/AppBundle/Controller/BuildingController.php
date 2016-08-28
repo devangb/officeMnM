@@ -38,6 +38,22 @@ class BuildingController extends Controller {
 	}
 	
 	/**
+	 * @Route("/building/{buildingId}/delete", name="building_delete")
+	 */
+	public function deleteAction($buildingId){
+		$em = $this->getDoctrine()->getManager();
+		
+		$building = $em->getRepository('AppBundle:Building')
+					->findOneBy(['id' => $buildingId]);
+		foreach ($building->getRooms() as $room){
+			$em->remove($room);
+			$em->flush();
+		}
+		$em->remove($building);
+		$em->flush();
+	}
+	
+	/**
 	 * @Route("/building/{building_name}/rooms", name="building_show_rooms")
 	 * 
 	 * @param Building $building        	

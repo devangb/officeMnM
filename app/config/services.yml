@@ -15,5 +15,16 @@ services:
         class: AppBundle\Doctrine\HashPasswordListener
         autowire: true
         tags:
-          - { name: doctrine.event_subscriber } 
+          - { name: doctrine.event_subscriber }
+#File uploader
+    app.room_photo_uploader:
+        class: AppBundle\Service\FileUploader
+        arguments: ['%room_photo_directory%']
         
+    app.doctrine_room_photo_listener:
+        class: AppBundle\EventListener\RoomPhotoUploadListener
+        arguments: ['@app.room_photo_uploader']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+#            - { name: doctrine.event_listener, event: postLoad }

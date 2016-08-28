@@ -2,6 +2,7 @@
 
 {% block body %}
 <div class="form">
+ <div class="col-sm-4">
 {{ form_start(organisationForm) }}
 <div class="form-group">
 {{ form_label(organisationForm.organisation_name,null, {'attr': {'class': 'control-label'}}) }}
@@ -13,5 +14,6 @@
 </div>
 <button type="submit" class="btn btn-primary form-control">Add</button>
 {{ form_end(organisationForm) }}
+</div>
 </div>
 {% endblock %}

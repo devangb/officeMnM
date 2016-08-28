@@ -3,7 +3,11 @@
 {% block body %}
     <h2 class="genus-name">{{ room.Roomname }}</h2>
     <div class="sea-creature-container">
-        <div class="genus-photo"></div>
+    	{% if(room.roomPhoto) %}
+        <img src="{{ asset('uploads/roomphotos/' ~ room.roomPhoto) }}" class="genus-photo">
+        {% else %}
+        <img src="{{ asset('uploads/roomphotos/room.jpg') }}" class="genus-photo">
+        {% endif %}
         <div class="genus-details">
             <dl class="genus-details-list">
             	<dt>Organisation:</dt>
