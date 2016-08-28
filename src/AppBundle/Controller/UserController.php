@@ -70,7 +70,8 @@ class UserController extends Controller {
 			return $this->redirectToRoute ( 'security_login' );
 		}
 		
-		$form = $this->createForm ( UserRegistrationForm::class, $this->getUser() );
+		$user = $this->getUser();
+		$form = $this->createForm ( UserRegistrationForm::class, $user );
 		
 		$form->handleRequest ( $request );
 		if ($form->isValid ()) {
@@ -81,7 +82,7 @@ class UserController extends Controller {
 				$em->persist($user);
 				$em->flush();
 			
-				$this->addFlash ( 'success', 'Welcome ' . $user->getEmail() );
+				$this->addFlash ( 'success', 'Profile edited ' . $user->getEmail() );
 			}
 			catch (\Exception $e) {
 				error_log($e->getMessage());
