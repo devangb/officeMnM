@@ -9,11 +9,9 @@ Room
 </h2>
 <div class="room-container">
 	{% if(room.roomPhoto) %}
-	<img src="{{ asset('uploads/roomphotos/' ~ room.roomPhoto) }}"
-		class="room-photo">
+	<img src="{{ asset('uploads/roomphotos/' ~ room.roomPhoto) }}" class="room-photo">
 	{% else %}
-	<img src="{{ asset('uploads/roomphotos/room.jpg') }}"
-		class="room-photo">
+	<img src="{{ asset('uploads/roomphotos/room.jpg') }}" class="room-photo">
 	{% endif %}
 	<div class="room-details">
 		<dl class="room-details-list">
