@@ -8,6 +8,10 @@
                 <th>Capacity</th>
                 <th>Building</th>
                 <th>Floor</th>
+                {% if is_granted('ROLE_USER') %}
+				<th>Edit</th>
+				<th>Delete</th>
+			    {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -17,6 +21,11 @@
                     <td>{{ room.capacity }}</td>
                     <td>{{ room.building }}</td>
                     <td>{{ room.roomFloor }}</td>
+                    <td><a
+				href="{{ path('room_edit', {'roomId': room.id}) }}">Edit</a></td>
+			<td><a
+				href="{{ path('room_delete', {'roomId': room.id}) }}">Delete</a></td>
+			{% endif %}
                 </tr>
             {% endfor %}
         </tbody>
