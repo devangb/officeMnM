@@ -21,6 +21,7 @@
                     <td>{{ room.capacity }}</td>
                     <td>{{ room.building }}</td>
                     <td>{{ room.roomFloor }}</td>
+                    {% if is_granted('ROLE_USER') %}
                     <td><a
 				href="{{ path('room_edit', {'roomId': room.id}) }}">Edit</a></td>
 			<td><a
