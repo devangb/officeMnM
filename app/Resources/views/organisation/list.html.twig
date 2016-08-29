@@ -20,7 +20,7 @@
 		<tr>
 			<td>{{ organisation.organisationName }}</td>
 			<td>{{ organisation.organisationDomain }}</td>
-			{% if is_granted('ROlE_USER') %}
+			{% if is_granted('ROLE_USER') %}
 			<td><a
 				href="{{ path('organisation_edit', {'organisationId': organisation.id}) }}">Edit</a></td>
 			<td><a
