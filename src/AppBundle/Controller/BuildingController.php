@@ -54,6 +54,56 @@ class BuildingController extends Controller {
 	}
 	
 	/**
+	 * @Route("/building", name="building_list")
+	 */
+	public function listAction() {
+		if (! $this->getUser ()) {
+			$this->addFlash ( 'notice', 'Login please!' );
+			return $this->redirectToRoute ( 'security_login' );
+		}
+		
+		try {
+			$em = $this->getDoctrine ()->getManager ();
+			$buildings = $em->getRepository ( 'AppBundle:Building' )->findAll ();
+		} catch ( \Exception $e ) {
+			error_log ( $e->getMessage () );
+			$this->addFlash ( 'notice', 'Something went wrong!' );
+		}
+		return $this->render ( 'building/list.html.twig', [ 
+				'buildings' => $buildings 
+		] );
+	}
+	
+	/**
+	 * @Route("/building/{buildingId}/edit", name="building_edit")
+	 */
+	public function editAction($buildingId, Request $request) {
+		$em = $this->getDoctrine ()->getManager ();
+		
+		$building = $em->getRepository ( 'AppBundle:Building' )->findOneBy ( [ 
+				'id' => $buildingId 
+		] );
+		
+		$form = $this->createForm ( BuildingAddForm::class, $building );
+		
+		$form->handleRequest ( $request );
+		if ($form->isSubmitted () && $form->isValid ()) {
+			$building = $form->getData ();
+			
+			$em = $this->getDoctrine ()->getManager ();
+			$em->persist ( $building );
+			$em->flush ();
+			
+			return $this->redirectToRoute ( 'building_list' );
+		}
+		
+		return $this->render ( 'building/edit.html.twig', [ 
+				'buildingForm' => $form->createView () 
+		] );
+	}
+	
+	
+	/**
 	 * @Route("/building/{building_name}/rooms", name="building_show_rooms")
 	 * 
 	 * @param Building $building        	

@@ -1,21 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Organisation</th>
-                <th>Domain</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for organisation in organisations %}
-                <tr>
-                    <td>{{ organisation.organisationName }}</td>
-                    <td>{{ organisation.organisationDomain }}</td>
-
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<a href="{{ path('organisation_add') }}">
+	<button type="submit" class="btn btn-primary">Add</button>
+</a>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Organisation</th>
+			<th>Domain</th>
+			{% if is_granted('ROLE_USER') %}
+			<th>Edit</th>
+			<th>Delete</th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+		{% for organisation in organisations %}
+		<tr>
+			<td>{{ organisation.organisationName }}</td>
+			<td>{{ organisation.organisationDomain }}</td>
+			{% if is_granted('ROlE_USER') %}
+			<td><a
+				href="{{ path('organisation_edit', {'organisationId': organisation.id}) }}"></a></td>
+			<td><a
+				href="{{ path('organisation_delete', {'organisationId': organisation.id}) }}"></a></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
 {% endblock %}

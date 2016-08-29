@@ -163,4 +163,28 @@ class BookingController extends Controller {
 				'bookingForm' => $form->createView (), 'room' => $booking->getRoom()
 		] );
 	}
+	
+		/**
+	 * @Route("/booking/{bookingId}/delete", name="booking_delete")
+	 */
+	public function deleteAction($bookingId) {
+		if (! $this->getUser ()) {
+			$this->addFlash ( 'notice', 'Login please!' );
+			return $this->redirectToRoute ( 'security_login' );
+		}
+		
+		$em = $this->getDoctrine ()->getManager ();
+		$booking = $em->getRepository ( 'AppBundle:Booking' )->findOneBy ( [ 
+				'id' => $bookingId 
+		] );
+		if ($booking->getOrganiser () == $this->getUser ()) {
+			$em->remove ( $booking );
+			$em->flush ();
+		} 
+
+		else {
+			$this->addFlash ( 'notice', 'Not authorised to delete this booking' );
+		}
+		return $this->redirectToRoute ( 'user_bookings' );
+	}
 }

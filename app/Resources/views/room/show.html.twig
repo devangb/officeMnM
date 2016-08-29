@@ -1,70 +1,108 @@
 {% extends 'base.html.twig' %}
-{% block title %}Room {{ room.roomName }}{% endblock %}
+{% block title %}
+Room
+{{ room.roomName }}
+{% endblock %}
 {% block body %}
-    <h2 class="genus-name">{{ room.Roomname }}</h2>
-    <div class="sea-creature-container">
-    	{% if(room.roomPhoto) %}
-        <img src="{{ asset('uploads/roomphotos/' ~ room.roomPhoto) }}" class="genus-photo">
-        {% else %}
-        <img src="{{ asset('uploads/roomphotos/room.jpg') }}" class="genus-photo">
-        {% endif %}
-        <div class="genus-details">
-            <dl class="genus-details-list">
-            	<dt>Organisation:</dt>
-                <dd>{{ room.building.organisation }}</dd>
-            	<dt>Building:</dt>
-                <dd>{{ room.building }}</dd>
-                <dt>Room name:</dt>
-                <dd>{{ room.roomName }}</dd>
-                <dt>Capacity:</dt>
-                <dd>{{ room.capacity }}</dd>
-                <dt>Floor:</dt>
-                <dd>{{ room.roomFloor }}</dd>
-                <dt>Projector:</dt>
-                <dd>{% if(room.hasProjector) %}
-                		Available
-                	{% else %}
-                		Not Available
-                	{% endif %}</dd>
-                <dt>Whiteboard:</dt>
-                <dd>{% if(room.hasWhiteboard) %}
-                		Available
-                	{% else %}
-                		Not available
-                	{% endif %}</dd>
-            </dl>
-        </div>
-    </div>
-    {% if(1) %}
-    <div class="notes-container">
-        <h2 class="notes-header">Bookings</h2>
-        <div><a href="{{ path('booking_add', {'roomId': room.id }) }}"><i class="fa fa-plus plus-btn"></i></a></div>
-    </div>
-    <section id="cd-timeline">
-    	{% for booking in room.roomBookings %}
-            <div class="cd-timeline-block">
-                <div class="cd-timeline-img">
-        			<img src="{{ asset('images/leanna.jpeg') }}" class="img-circle" alt="Leanna!">
-        		</div>
-                <div class="cd-timeline-content">
-        			<h2><a href="#">{{ booking.organiser }}</a></h2>
-        			<p>{{ booking.purpose }}</p>
-        			{% if(currentUser == booking.organiser) %}<a href={{ path('booking_edit', {'bookingId': booking.id}) }}>Edit</a>{% endif %}
-        			<span class="cd-date">{{ booking.startTime|date('Y/m/d h:i') }} - {{ booking.extendedTime|date('Y/m/d h:i') }}</span>
-        		</div>
-            </div>
-        {% endfor %}
-    </section>
-    {% endif %}
+<h2 class="room-name">
+	{{ room.Roomname }}
+</h2>
+<div class="room-container">
+	{% if(room.roomPhoto) %}
+	<img src="{{ asset('uploads/roomphotos/' ~ room.roomPhoto) }}"
+		class="room-photo">
+	{% else %}
+	<img src="{{ asset('uploads/roomphotos/room.jpg') }}"
+		class="room-photo">
+	{% endif %}
+	<div class="room-details">
+		<dl class="room-details-list">
+			<dt>Organisation:</dt>
+			<dd>
+				{{ room.building.organisation }}
+			</dd>
+			<dt>Building:</dt>
+			<dd>
+				{{ room.building }}
+			</dd>
+			<dt>Room name:</dt>
+			<dd>
+				{{ room.roomName }}
+			</dd>
+			<dt>Capacity:</dt>
+			<dd>
+				{{ room.capacity }}
+			</dd>
+			<dt>Floor:</dt>
+			<dd>
+				{{ room.roomFloor }}
+			</dd>
+			<dt>Projector:</dt>
+			<dd>
+				{% if(room.hasProjector) %}
+				Available
+				{% else %}
+				Not Available
+				{% endif %}
+			</dd>
+			<dt>Whiteboard:</dt>
+			<dd>
+				{% if(room.hasWhiteboard) %}
+				Available
+				{% else %}
+				Not available
+				{% endif %}
+			</dd>
+		</dl>
+	</div>
+</div>
+{% if(1) %}
+<div class="bookings-container">
+	<h2 class="bookings-header">Bookings</h2>
+	<div>
+		<a href="{{ path('booking_add', {'roomId': room.id }) }}"><i
+			class="fa fa-plus plus-btn"></i></a>
+	</div>
+</div>
+<section id="cd-timeline">
+	{% for booking in room.roomBookings %}
+	<div class="cd-timeline-block">
+		<div class="cd-timeline-img">
+			<img src="{{ asset('uploads/userphotos/user.jpeg') }}"
+				class="img-circle">
+		</div>
+		<div class="cd-timeline-content">
+			<h2>
+				<a href="#">{{ booking.organiser }}</a>
+			</h2>
+			<p>
+				{{ booking.purpose }}
+			</p>
+			{% if(currentUser == booking.organiser) %}
+			<a href={{ path('booking_edit', {'bookingId': booking.id}) }}>Edit</a>
+			{% endif %}
+			{% if(currentUser == booking.organiser) %}
+			<a href={{ path('booking_delete', {'bookingId': booking.id}) }}>Delete</a>
+			{% endif %}
+			<span class="cd-date">{{ booking.startTime|date('Y/m/d h:i') }}
+				- {{ booking.extendedTime|date('Y/m/d h:i') }}</span>
+		</div>
+	</div>
+	{% endfor %}
+</section>
+{% endif %}
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-    <script type="text/babel" src="{{ asset('js/notes.react.js') }}"></script>
-    <script type="text/babel">
+{{ parent() }}
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+<script type="text/babel" src="{{ asset('js/notes.react.js') }}"></script>
+<script type="text/babel">
         var notesUrl = '{{ path('room_show_bookings', {'roomId': room.id}) }}';
         ReactDOM.render(
           <NoteSection url={notesUrl} />,

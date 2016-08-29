@@ -50,6 +50,63 @@ class OrganisationController extends Controller {
 		] );
 	}
 	
+	/**
+	 * @Route("/organisation/{organisationId}/delete", name="organisation_delete")
+	 */
+	public function deleteAction($organisationId) {
+		if (! $this->getUser ()) {
+			$this->addFlash ( 'notice', 'Login please!' );
+			return $this->redirectToRoute ( 'security_login' );
+		}
+		
+		$em = $this->getDoctrine ()->getManager ();
+		$organisation = $em->getRepository ( 'AppBundle:Organisation' )->findOneBy ( [ 
+				'id' => $organisationId 
+		] );
+		
+		$em->remove ( $organisation );
+		$em->flush ();
+		
+		return $this->redirectToRoute ( 'organisation_list' );
+	}
+	
+	/**
+	 * @Route("/organisation/{organisationId}/edit", name="organisation_edit")
+	 */
+	public function editAction(Request $request, $organisationId) {
+		if (! $this->getUser ()) {
+			$this->addFlash ( 'notice', 'Login please!' );
+			return $this->redirectToRoute ( 'security_login' );
+		}
+		
+		$em = $this->getDoctrine ()->getManager ();
+		$organisation = $em->getRepository ( 'AppBundle:Organisation' )->findOneBy ( [ 
+				'id' => $organisationId 
+		] );
+		$form = $this->createForm ( OrganisationAddForm::class, $organisation );
+		
+		$form->handleRequest ( $request );
+		if ($form->isSubmitted () && $form->isValid ()) {
+			$organisation = $form->getData ();
+			
+			try {
+				$em = $this->getDoctrine ()->getManager ();
+				$em->persist ( $organisation );
+				$em->flush ();
+			} catch ( \Exception $e ) {
+				error_log ( $e->getMessage () );
+				$this->addFlash ( 'notice', 'Something went wrong!' );
+			}
+			
+			return $this->redirectToRoute ( 'organisation_list' );
+		}
+		
+		return $this->render ( 'organisation/edit.html.twig', [ 
+				'organisationForm' => $form->createView () 
+		] );
+	}
+								
+	
 	/*
 	 * List all registered organisation
 	 */

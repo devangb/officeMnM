@@ -1,93 +1,119 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+Room
+{{ room.roomName }}
+{% endblock %}
 {% block body %}
 <div class="container">
+	<div class="col-sm-8">
+		<h2 class="room-name">
+			{{ room.Roomname }}
+		</h2>
+		<div class="room-container">
+			{% if(room.roomPhoto) %}
+			<img src="{{ asset('uploads/roomphotos/' ~ room.roomPhoto) }}"
+				class="room-photo">
+			{% else %}
+			<img src="{{ asset('uploads/roomphotos/room.jpg') }}"
+				class="room-photo">
+			{% endif %}
+			<div class="room-details">
+				<dl class="room-details-list">
+					<dt>Organisation:</dt>
+					<dd>
+						{{ room.building.organisation }}
+					</dd>
+					<dt>Building:</dt>
+					<dd>
+						{{ room.building }}
+					</dd>
+					<dt>Room name:</dt>
+					<dd>
+						{{ room.roomName }}
+					</dd>
+					<dt>Capacity:</dt>
+					<dd>
+						{{ room.capacity }}
+					</dd>
+					<dt>Floor:</dt>
+					<dd>
+						{{ room.roomFloor }}
+					</dd>
+					<dt>Projector:</dt>
+					<dd>
+						{% if(room.hasProjector) %}
+						Available
+						{% else %}
+						Not Available
+						{% endif %}
+					</dd>
+					<dt>Whiteboard:</dt>
+					<dd>
+						{% if(room.hasWhiteboard) %}
+						Available
+						{% else %}
+						Not available
+						{% endif %}
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+
+
 	<div class="col-sm-6">
-    <h2 class="genus-name">{{ room.Roomname }}</h2>
-    <div class="sea-creature-container">
-        {% if(room.roomPhoto) %}
-        <img src="{{ asset('uploads/roomphotos/' ~ room.roomPhoto) }}" class="genus-photo">
-        {% else %}
-        <img src="{{ asset('uploads/defaults/room.jpg') }}" class="genus-photo">
-        {% endif %}
-        <div class="genus-details">
-            <dl class="genus-details-list">
-            	<dt>Organisation:</dt>
-                <dd>{{ room.building.organisation }}</dd>
-            	<dt>Building:</dt>
-                <dd>{{ room.building }}</dd>
-                <dt>Room name:</dt>
-                <dd>{{ room.roomName }}</dd>
-                <dt>Capacity:</dt>
-                <dd>{{ room.capacity }}</dd>
-                <dt>Floor:</dt>
-                <dd>{{ room.roomFloor }}</dd>
-                <dt>Projector:</dt>
-                <dd>{% if(room.hasProjector) %}
-                		Available
-                	{% else %}
-                		Not Available
-                	{% endif %}</dd>
-                <dt>Whiteboard:</dt>
-                <dd>{% if(room.hasWhiteboard) %}
-                		Available
-                	{% else %}
-                		Not available
-                	{% endif %}</dd>
-            </dl>
-        </div>
-    </div>
-    </div>
- 
- 
- <div class="col-sm-6">
- <div class="form">
-{{ form_start(bookingForm) }}
-<div class="form-group">
-{{ form_label(bookingForm.purpose,null, {'attr': {'class': 'control-label'}}) }}
-{{ form_widget(bookingForm.purpose, {'attr': {'class': 'form-control', 'placeholder': 'Purpose of booking'}}) }}
-</div>
-<div class="form-group">
-{{ form_label(bookingForm.capacity,null, {'attr': {'class': 'control-label'}}) }}
-{{ form_widget(bookingForm.capacity, {'attr': {'class': 'form-control', 'placeholder': 'Needed capacity'}}) }}
-</div>
-<div class="form-group">
-		{{ form_label(bookingForm.start_time,null, {'attr': {'class': 'control-label'}}) }}
-        {{ form_errors(bookingForm.start_time) }}
-          <div class='input-group date' id='datetimepicker'>
-           {{ form_widget(bookingForm.start_time, {'attr': {'class': 'form-control input-inline datetimepicker', 'placeholder': 'Start time'}}) }}
-             <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-         </div>
-     </div>
-    <div class="form-group">
-    	{{ form_label(bookingForm.end_time,null, {'attr': {'class': 'control-label'}}) }}
-        {{ form_errors(bookingForm.end_time) }}
-          <div class='input-group date' id='datetimepicker1'>
-           {{ form_widget(bookingForm.end_time, {'attr': {'class': 'form-control input-inline datetimepicker', 'placeholder': 'End time'}}) }}
-             <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-         </div>
-     </div>
-</div>
-<button type="submit" class="btn btn-primary form-control">Book it!</button>
-{{ form_end(bookingForm) }}
-</div>
+		<div class="form">
+			{{ form_start(bookingForm) }}
+			<div class="form-group">
+				{{ form_label(bookingForm.purpose,null, {'attr': {'class': 'control-label'}}) }}
+				{{ form_widget(bookingForm.purpose, {'attr': {'class': 'form-control', 'placeholder': 'Purpose of booking'}}) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(bookingForm.capacity,null, {'attr': {'class': 'control-label'}}) }}
+				{{ form_widget(bookingForm.capacity, {'attr': {'class': 'form-control', 'placeholder': 'Needed capacity'}}) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(bookingForm.start_time,null, {'attr': {'class': 'control-label'}}) }}
+				{{ form_errors(bookingForm.start_time) }}
+				<div class='input-group date' id='datetimepicker'>
+					{{ form_widget(bookingForm.start_time, {'attr': {'class': 'form-control input-inline datetimepicker', 'placeholder': 'Start time'}}) }}
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				{{ form_label(bookingForm.end_time,null, {'attr': {'class': 'control-label'}}) }}
+				{{ form_errors(bookingForm.end_time) }}
+				<div class='input-group date' id='datetimepicker1'>
+					{{ form_widget(bookingForm.end_time, {'attr': {'class': 'form-control input-inline datetimepicker', 'placeholder': 'End time'}}) }}
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary form-control">Book
+			it!</button>
+		{{ form_end(bookingForm) }}
+	</div>
 </div>
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker-standalone.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
+{{ parent() }}
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker-standalone.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript">
+{{ parent() }}
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
             $('#datetimepicker').datetimepicker({
                 locale: 'en',
                 useCurrent: false,

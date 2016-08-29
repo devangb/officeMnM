@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="form">
+ <div class="col-sm-4">
+{{ form_start(organisationForm) }}
+<div class="form-group">
+{{ form_label(organisationForm.organisation_name,null, {'attr': {'class': 'control-label'}}) }}
+{{ form_widget(organisationForm.organisation_name, {'attr': {'class': 'form-control', 'placeholder': 'Organisation name'}}) }}
+</div>
+<div class="form-group">
+{{ form_label(organisationForm.organisation_domain,null, {'attr': {'class': 'control-label'}}) }}
+{{ form_widget(organisationForm.organisation_domain, {'attr': {'class': 'form-control', 'placeholder': 'Organisation domain'}}) }}
+</div>
+<button type="submit" class="btn btn-primary form-control">Edit</button>
+{{ form_end(organisationForm) }}
+</div>
+</div>
+{% endblock %}

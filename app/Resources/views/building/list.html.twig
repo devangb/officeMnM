@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Organisation</th>
-                <th>Buildings</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for organisation in organisations %}
-                <tr>
-                    <td>{{ building.organisation }}</td>
-                    <td>{{ building.building_name }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<a href="{{ path('building_add') }}">
+	<button type="submit" class="btn btn-primary">Add</button>
+</a>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Organisation</th>
+			<th>Building</th>
+			{% if is_granted('ROLE_USER') %}
+			<th>Edit</th>
+			<th>Delete</th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+		{% for building in buildings %}
+		<tr>
+			<td>{{ building.organisation }}</td>
+			<td>{{ building.building_name }}</td>
+			{% if is_granted('ROLE_USER') %}
+			<td><a
+				href="{{ path('building_edit', {'buildingId': building.id}) }}">Edit</a></td>
+			<td><a
+				href="{{ path('building_delete', {'buildingId': building.id}) }}">Delete</a></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
 {% endblock %}
