@@ -22,9 +22,9 @@
 			<td>{{ organisation.organisationDomain }}</td>
 			{% if is_granted('ROlE_USER') %}
 			<td><a
-				href="{{ path('organisation_edit', {'organisationId': organisation.id}) }}"></a></td>
+				href="{{ path('organisation_edit', {'organisationId': organisation.id}) }}">Edit</a></td>
 			<td><a
-				href="{{ path('organisation_delete', {'organisationId': organisation.id}) }}"></a></td>
+				href="{{ path('organisation_delete', {'organisationId': organisation.id}) }}">Delete</a></td>
 			{% endif %}
 		</tr>
 		{% endfor %}
