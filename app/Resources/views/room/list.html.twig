@@ -23,10 +23,10 @@
                     <td>{{ room.roomFloor }}</td>
                     {% if is_granted('ROLE_USER') %}
                     <td><a
-				href="{{ path('room_edit', {'roomId': room.id}) }}">Edit</a></td>
-			<td><a
-				href="{{ path('room_delete', {'roomId': room.id}) }}">Delete</a></td>
-			{% endif %}
+						href="{{ path('room_edit', {'roomId': room.id}) }}">Edit</a></td>
+					<td><a
+						href="{{ path('room_delete', {'roomId': room.id}) }}">Delete</a></td>
+			        {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
