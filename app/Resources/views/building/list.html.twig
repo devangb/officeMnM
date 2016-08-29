@@ -19,7 +19,7 @@
 		{% for building in buildings %}
 		<tr>
 			<td>{{ building.organisation }}</td>
-			<td>{{ building.building_name }}</td>
+			<td>{{ building.buildingName }}</td>
 			{% if is_granted('ROLE_USER') %}
 			<td><a
 				href="{{ path('building_edit', {'buildingId': building.id}) }}">Edit</a></td>
